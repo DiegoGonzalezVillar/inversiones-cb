@@ -1,0 +1,26 @@
+@baseUrl = http://localhost:3000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBjYi5jb20iLCJyb2wiOiJhZG1pbiIsImlhdCI6MTc2NzM2OTQ4MywiZXhwIjoxNzY3NDU1ODgzfQ.pQ9zMkbop4S06JqxxnfbKW9MrogAZB-KwkKN-O62MdY
+
+### ✅ Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@cb.com",
+  "password": "admin123"
+}
+
+
+### ✅ Perfil (requiere token)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+
+### ✅ Dashboard (por ahora sin protección)
+GET {{baseUrl}}/dashboard
+Authorization: Bearer {{token}}
+
+
+### ✅ Empresas
+GET {{baseUrl}}/empresas
+Authorization: Bearer {{token}}

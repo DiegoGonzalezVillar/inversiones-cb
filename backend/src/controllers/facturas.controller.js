@@ -81,3 +81,30 @@ export const crearFactura = async (req, res) => {
     res.status(500).json({ error: "Error al crear factura" });
   }
 };
+
+export async function listarFacturasPorProyecto(req, res) {
+  const { proyectoId } = req.params;
+
+  try {
+    const { rows } = await pool.query(
+      `
+      SELECT
+        id,
+        fecha,
+        estado,
+        total,
+        moneda,
+        nombre_cliente
+      FROM facturas
+      WHERE proyecto_id = $1
+      ORDER BY fecha DESC
+      `,
+      [proyectoId]
+    );
+
+    res.json(rows);
+  } catch (error) {
+    console.error("Error listarFacturasPorProyecto:", error);
+    res.status(500).json({ error: "Error al listar facturas" });
+  }
+}

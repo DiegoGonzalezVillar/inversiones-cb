@@ -3,9 +3,7 @@ import { pool } from "../config/db.js";
 // GET /empresas
 export const listarEmpresas = async (req, res) => {
   try {
-    const { rows } = await pool.query(
-      "SELECT id, nombre, rut, activo FROM empresas ORDER BY nombre"
-    );
+    const { rows } = await pool.query("SELECT * FROM empresas ORDER BY nombre");
     res.json(rows);
   } catch (error) {
     console.error(error);

@@ -68,3 +68,30 @@ export const crearProyecto = async (req, res) => {
     res.status(500).json({ error: "Error al crear proyecto" });
   }
 };
+
+export async function listarProyectosPorEmpresa(req, res) {
+  const { empresaId } = req.params;
+
+  try {
+    const { rows } = await pool.query(
+      `
+      SELECT
+        id,
+        fecha_ingreso,
+        numero_expediente,
+        estado,
+        ministerio,
+        decreto
+      FROM proyectos
+      WHERE empresa_id = $1
+      ORDER BY fecha_ingreso DESC
+      `,
+      [empresaId]
+    );
+
+    res.json(rows);
+  } catch (error) {
+    console.error("Error listarProyectosPorEmpresa:", error);
+    res.status(500).json({ error: "Error al listar proyectos" });
+  }
+}

@@ -17,10 +17,9 @@ services:
   backend:
     build: .
     container_name: backend_inversiones
-    command: npm run dev
+    command: node src/server.js
     volumes:
       - .:/app
-      - /app/node_modules
     ports:
       - "3000:3000"
     depends_on:
