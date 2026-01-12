@@ -7,6 +7,7 @@ import pagosRoutes from "./routes/pagos.routes.js";
 import dashboardRoutes from "./routes/dashboard.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import toolsRoutes from "./routes/tools.routes.js";
+import { pool } from "./config/db.js";
 
 const app = express();
 
