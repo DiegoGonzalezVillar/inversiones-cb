@@ -26,4 +26,14 @@ app.use("/dashboard", dashboardRoutes);
 app.use("/auth", authRoutes);
 app.use("/tools", toolsRoutes);
 
+app.get("/health/db", async (req, res) => {
+  try {
+    const r = await pool.query("SELECT now() as now");
+    res.json({ status: "ok", db: "ok", now: r.rows[0].now });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ status: "error", db: "error", message: e.message });
+  }
+});
+
 export default app;
