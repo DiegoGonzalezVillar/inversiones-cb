@@ -1,0 +1,62 @@
+/* Responsive Tools */
+.tools-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  gap: 18px;
+}
+
+.tools-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tools-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+  .tools-page {
+    padding: 28px 12px !important;
+  }
+
+  .tools-card {
+    padding: 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .tools-title {
+    font-size: 26px !important;
+  }
+
+  .tools-actions {
+    flex-direction: column;
+  }
+
+  .tools-actions > * {
+    width: 100%;
+    text-align: center;
+  }
+
+  .tools-fileinfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

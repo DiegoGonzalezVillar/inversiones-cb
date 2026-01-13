@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { apiFetch } from "../api/api";
+import "../styles/tools.css";
 
 export default function Tools() {
   const API = import.meta.env.VITE_API_URL;
@@ -99,9 +100,11 @@ export default function Tools() {
     <div style={page}>
       <div style={container}>
         {/* HEADER */}
-        <div style={header}>
+        <div style={header} className="tools-header">
           <div>
-            <h1 style={title}>Herramientas</h1>
+            <h1 style={title} className="tools-title">
+              Herramientas
+            </h1>
             <p style={subtitle}>
               Convertí tu Excel de facturación al archivo TXT listo para cargar.
             </p>
@@ -114,8 +117,8 @@ export default function Tools() {
         </div>
 
         {/* CARD PRINCIPAL */}
-        <div style={card}>
-          <div style={grid}>
+        <div style={card} className="tools-card">
+          <div style={grid} className="tools-grid">
             {/* IZQUIERDA */}
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               <h2 style={h2}>Convertidor Excel → TXT</h2>
@@ -160,7 +163,7 @@ export default function Tools() {
               </div>
 
               {/* DETALLE ARCHIVO */}
-              <div style={fileInfo}>
+              <div style={fileInfo} className="tools-fileinfo">
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <span style={{ opacity: 0.85, fontSize: 13 }}>
                     Archivo seleccionado
@@ -176,7 +179,10 @@ export default function Tools() {
               </div>
 
               {/* BOTONES */}
-              <div style={{ display: "flex", gap: 12 }}>
+              <div
+                style={{ display: "flex", gap: 12 }}
+                className="tools-actions"
+              >
                 <button
                   style={{
                     ...primaryBtn,
@@ -310,7 +316,6 @@ const card = {
 
 const grid = {
   display: "grid",
-  gridTemplateColumns: "1.3fr 0.9fr",
   gap: 18,
 };
 

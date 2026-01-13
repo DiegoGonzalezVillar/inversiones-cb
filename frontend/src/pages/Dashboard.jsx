@@ -5,6 +5,8 @@ import MetricCard from "../components/dashboard/MetricCard";
 import UltimosProyectos from "../components/dashboard/UltimosProyectos";
 import UltimasFacturas from "../components/dashboard/UltimasFacturas";
 
+import "../styles/dashboard.css";
+
 export default function Dashboard() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,11 +21,11 @@ export default function Dashboard() {
   if (!data) return <p style={{ padding: 40 }}>Error al cargar dashboard</p>;
 
   return (
-    <div style={container}>
+    <div style={container} className="dashboard">
       <h1 style={title}>Dashboard</h1>
 
       {/* MÉTRICAS */}
-      <div style={metricsGrid}>
+      <div style={metricsGrid} className="dashboard__metrics">
         <MetricCard label="Empresas" value={data.empresas} />
         <MetricCard label="Proyectos" value={data.proyectos} />
         <MetricCard
@@ -37,7 +39,7 @@ export default function Dashboard() {
       </div>
 
       {/* LISTADOS */}
-      <div style={listsGrid}>
+      <div style={listsGrid} className="dashboard__lists">
         <UltimosProyectos data={data.ultimosProyectos} />
         <UltimasFacturas data={data.ultimasFacturas} />
       </div>
@@ -45,8 +47,7 @@ export default function Dashboard() {
   );
 }
 
-/* ---------- ESTILOS (solo de esta página) ---------- */
-
+/* ---------- estilos base (sin columnas fijas) ---------- */
 const container = {
   maxWidth: 1200,
   margin: "0 auto",
@@ -62,13 +63,11 @@ const title = {
 
 const metricsGrid = {
   display: "grid",
-  gridTemplateColumns: "repeat(4, 1fr)",
   gap: 20,
   marginBottom: 30,
 };
 
 const listsGrid = {
   display: "grid",
-  gridTemplateColumns: "1fr 1fr",
   gap: 20,
 };

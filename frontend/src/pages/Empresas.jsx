@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { apiFetch } from "../api/api";
 import Proyectos from "./Proyectos";
+import "../styles/empresas.css";
 
 export default function Empresas() {
   const [empresas, setEmpresas] = useState([]);
@@ -19,16 +20,18 @@ export default function Empresas() {
   if (error) return <p style={{ ...stateText, color: "red" }}>{error}</p>;
 
   return (
-    <div style={page}>
-      <h1 style={pageTitle}>Empresas & Proyectos</h1>
+    <div style={page} className="empresas-page">
+      <h1 style={pageTitle} className="empresas-title">
+        Empresas & Proyectos
+      </h1>
 
-      <div style={layout}>
+      <div style={layout} className="empresas-layout">
         {/* EMPRESAS */}
-        <div style={card}>
+        <div style={card} className="empresas-card">
           <h2 style={cardTitle}>Empresas</h2>
 
-          <div style={tableContainer}>
-            <table style={table}>
+          <div style={tableContainer} className="empresas-tableWrap">
+            <table style={table} className="empresas-table">
               <thead>
                 <tr>
                   <th style={th}>Nombre</th>
@@ -49,9 +52,15 @@ export default function Empresas() {
                         backgroundColor: selected ? "#e6f0f7" : "transparent",
                       }}
                     >
-                      <td style={tdStrong}>{e.nombre}</td>
-                      <td style={td}>{e.rut || "-"}</td>
-                      <td style={td}>{e.email || "-"}</td>
+                      <td style={tdStrong} data-label="Nombre">
+                        {e.nombre}
+                      </td>
+                      <td style={td} data-label="RUT">
+                        {e.rut || "-"}
+                      </td>
+                      <td style={td} data-label="Email">
+                        {e.email || "-"}
+                      </td>
                     </tr>
                   );
                 })}
@@ -61,7 +70,7 @@ export default function Empresas() {
         </div>
 
         {/* PROYECTOS */}
-        <div style={card}>
+        <div style={card} className="empresas-card">
           <h2 style={cardTitle}>Proyectos</h2>
 
           {empresaSeleccionada ? (
@@ -77,6 +86,7 @@ export default function Empresas() {
   );
 }
 
+/* base */
 const page = {
   maxWidth: 1200,
   margin: "0 auto",
@@ -89,9 +99,9 @@ const pageTitle = {
   color: "#0b3a5b",
 };
 
+/* 👇 sacamos gridTemplateColumns para que lo maneje CSS */
 const layout = {
   display: "grid",
-  gridTemplateColumns: "1fr 1fr",
   gap: 30,
 };
 
@@ -150,7 +160,6 @@ const stateText = {
 };
 
 const tableContainer = {
-  maxHeight: "calc(100vh - 350px)",
+  maxHeight: "60vh",
   overflowY: "auto",
-  paddingRight: 8,
 };
