@@ -6,7 +6,7 @@ export default function Contacto() {
       <h2 style={title}>CONTACTO</h2>
 
       <form style={form}>
-        <div style={row}>
+        <div style={row} className="contact-row">
           <div style={field}>
             <label style={label}>Nombre</label>
             <input style={input} />
@@ -18,7 +18,7 @@ export default function Contacto() {
           </div>
         </div>
 
-        <div style={row}>
+        <div style={row} className="contact-row">
           <div style={field}>
             <label style={label}>Email *</label>
             <input style={input} type="email" required />

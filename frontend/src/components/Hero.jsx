@@ -6,13 +6,15 @@ import { useNavigate } from "react-router-dom";
 export default function Hero() {
   const navigate = useNavigate();
   return (
-    <section id="inicio" style={hero}>
+    <section id="inicio" style={hero} className="hero">
       <div style={overlay} />
 
-      <div style={card}>
+      <div style={card} className="hero-card">
         <p style={{ color: "#555" }}>Desarrollando los mejores proyectos</p>
 
-        <h1 style={title}>TRABAJANDO EN EQUIPO</h1>
+        <h1 style={title} className="hero-title">
+          TRABAJANDO EN EQUIPO
+        </h1>
 
         <button style={button} onClick={() => navigate("/empresas")}>
           Nuestros proyectos

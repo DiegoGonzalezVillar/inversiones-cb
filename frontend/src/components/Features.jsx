@@ -3,7 +3,7 @@ import React from "react";
 export default function Features() {
   return (
     <section id="servicios" style={section}>
-      <div style={grid}>
+      <div style={grid} className="features-grid">
         <Feature
           title="SERVICIOS"
           text="Acompañamos a empresas en la planificación, gestión y seguimiento de sus inversiones, brindando una visión integral y profesional."
@@ -25,16 +25,13 @@ export default function Features() {
 
 function Feature({ title, text }) {
   return (
-    <div style={card}>
+    <div style={card} className="feature-card">
       <h3 style={titleStyle}>{title}</h3>
-
       <p style={textStyle}>{text}</p>
-
       <button style={button}>Más información</button>
     </div>
   );
 }
-
 const section = {
   padding: "100px 32px",
   backgroundColor: "#fff",
@@ -44,7 +41,6 @@ const grid = {
   maxWidth: 1200,
   margin: "0 auto",
   display: "grid",
-  gridTemplateColumns: "repeat(3, 1fr)",
   border: "1px solid #d1d5db",
 };
 

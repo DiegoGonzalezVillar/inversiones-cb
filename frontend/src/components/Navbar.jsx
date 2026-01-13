@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import "../styles/navbar.css";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
   function handleSectionClick(e, id) {
     e.preventDefault();
+    setMenuOpen(false);
 
     // si ya estamos en home → scroll suave
     if (location.pathname === "/") {
@@ -25,17 +29,127 @@ export default function Navbar() {
     }, 200);
   }
 
+  // Cerrar menú si pasamos a desktop
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 900) setMenuOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // Lista de items (para no duplicar lógica)
+  const items = useMemo(() => {
+    const base = [
+      {
+        key: "inicio",
+        type: "section",
+        label: "Inicio",
+        sectionId: "inicio",
+      },
+      {
+        key: "servicios",
+        type: "section",
+        label: "Servicios",
+        sectionId: "servicios",
+      },
+      {
+        key: "about",
+        type: "section",
+        label: "Proyectos",
+        sectionId: "about",
+      },
+      {
+        key: "contacto",
+        type: "section",
+        label: "Contacto",
+        sectionId: "contacto",
+      },
+    ];
+
+    if (!user) {
+      return [
+        ...base,
+        {
+          key: "login",
+          type: "action",
+          label: "Iniciar sesión",
+          action: "login",
+        },
+      ];
+    }
+
+    const authed = [
+      ...base,
+      {
+        key: "dashboard",
+        type: "route",
+        label: "Dashboard",
+        path: "/dashboard",
+      },
+      { key: "empresas", type: "route", label: "Empresas", path: "/empresas" },
+    ];
+
+    if (user.rol === "admin") {
+      authed.push({
+        key: "tools",
+        type: "route",
+        label: "Herramientas",
+        path: "/tools",
+      });
+    }
+
+    authed.push({
+      key: "logout",
+      type: "action",
+      label: "Salir",
+      action: "logout",
+    });
+
+    return authed;
+  }, [user]);
+
+  const handleItemClick = (e, item) => {
+    if (item.type === "section") return handleSectionClick(e, item.sectionId);
+
+    e.preventDefault();
+    setMenuOpen(false);
+
+    if (item.type === "route") {
+      navigate(item.path);
+      return;
+    }
+
+    if (item.type === "action" && item.action === "login") {
+      navigate("/login");
+      return;
+    }
+
+    if (item.type === "action" && item.action === "logout") {
+      logout();
+      navigate("/");
+    }
+  };
+
   return (
     <header style={header}>
       <div style={container}>
         {/* Brand */}
         <p style={{ margin: 0 }}>
-          <a style={link2} onClick={() => navigate("/")}>
+          <a
+            style={link2}
+            onClick={() => {
+              setMenuOpen(false);
+              navigate("/");
+            }}
+          >
             CB & Asociados
           </a>
         </p>
 
-        <nav style={nav}>
+        {/* NAV desktop (igual que antes) */}
+        <nav style={nav} className="cb-nav-desktop">
+          {/* Base */}
           <a
             href="#inicio"
             style={link}
@@ -68,7 +182,6 @@ export default function Navbar() {
             Contacto
           </a>
 
-          {/* Si hay sesión */}
           {user ? (
             <>
               <a style={link} onClick={() => navigate("/dashboard")}>
@@ -85,7 +198,6 @@ export default function Navbar() {
                 </a>
               )}
 
-              {/* Logout */}
               <a
                 style={logoutBtn}
                 onClick={() => {
@@ -97,18 +209,60 @@ export default function Navbar() {
               </a>
             </>
           ) : (
-            // Sin sesión
             <a style={loginBtn} onClick={() => navigate("/login")}>
               Iniciar sesión
             </a>
           )}
         </nav>
+
+        {/* Botón hamburguesa (mobile) */}
+        <button
+          className="cb-burger"
+          aria-label="Abrir menú"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+          style={burgerBtn}
+        >
+          <span className={`cb-burger-line ${menuOpen ? "open" : ""}`} />
+          <span className={`cb-burger-line ${menuOpen ? "open" : ""}`} />
+          <span className={`cb-burger-line ${menuOpen ? "open" : ""}`} />
+        </button>
       </div>
+
+      {/* Menú mobile desplegable */}
+      {menuOpen && (
+        <div style={mobilePanel} className="cb-nav-mobile">
+          {items.map((item) => {
+            const isLogout = item.type === "action" && item.action === "logout";
+            const isLogin = item.type === "action" && item.action === "login";
+
+            const styleToUse = isLogout ? logoutBtn : isLogin ? loginBtn : link;
+
+            // href solo para anchors (por accesibilidad)
+            const href = item.type === "section" ? `#${item.sectionId}` : "#";
+
+            return (
+              <a
+                key={item.key}
+                href={href}
+                style={{
+                  ...styleToUse,
+                  display: "block",
+                  padding: "12px 10px",
+                }}
+                onClick={(e) => handleItemClick(e, item)}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </div>
+      )}
     </header>
   );
 }
 
-/* ✅ Estilos (manteniendo el look pro y consistente) */
+/* ✅ Tus estilos originales (SIN CAMBIOS DE LOOK) */
 
 const header = {
   position: "fixed",
@@ -124,7 +278,7 @@ const header = {
 const container = {
   maxWidth: 1000,
   margin: "0 auto",
-  padding: "16px 24px",
+  padding: "16px 24px", // 👈 mantiene tu altura
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
@@ -168,4 +322,20 @@ const logoutBtn = {
   padding: "10px 14px",
   borderRadius: 999,
   background: "rgba(255,255,255,0.12)",
+};
+
+/* Burger button (solo posicion/estética mínima) */
+const burgerBtn = {
+  background: "transparent",
+  border: "1px solid rgba(255,255,255,0.18)",
+  borderRadius: 10,
+  padding: "10px 12px",
+  cursor: "pointer",
+  display: "none", // lo muestra el CSS en mobile
+};
+
+const mobilePanel = {
+  backgroundColor: "rgba(3, 14, 49, 0.98)",
+  borderTop: "1px solid rgba(255,255,255,0.08)",
+  padding: "8px 12px 14px",
 };

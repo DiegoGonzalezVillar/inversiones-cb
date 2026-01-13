@@ -1,0 +1,30 @@
+/* Desktop: mostrar nav normal, ocultar burger */
+.cb-nav-desktop {
+  display: flex;
+}
+
+.cb-burger {
+  display: none;
+}
+
+/* Mobile: ocultar nav normal, mostrar burger */
+@media (max-width: 900px) {
+  .cb-nav-desktop {
+    display: none !important;
+  }
+
+  .cb-burger {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Lineas burger */
+.cb-burger-line {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.92);
+  margin: 5px 0;
+}
