@@ -26,7 +26,7 @@ export async function getDashboard(req, res) {
     `);
 
     const ultimasFacturas = await pool.query(`
-      SELECT id, nombre_cliente, total, moneda
+      SELECT id, cliente_nombre, total, moneda
       FROM facturas
       ORDER BY fecha DESC
       LIMIT 5
