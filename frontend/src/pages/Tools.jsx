@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { apiFetch } from "../api/api";
 
 export default function Tools() {
+  const API = import.meta.env.VITE_API_URL;
   const inputRef = useRef(null);
 
   const [file, setFile] = useState(null);
@@ -43,8 +44,7 @@ export default function Tools() {
       const formData = new FormData();
       formData.append("file", file);
 
-      // Endpoint backend: /tools/convert
-      const res = await fetch("http://localhost:3000/tools/xls-to-txt", {
+      const res = await fetch(`${API}/tools/xls-to-txt`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
