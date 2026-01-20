@@ -1,12 +1,22 @@
 import React from "react";
+import useRevealOnScroll from "../hooks/useRevealOnScroll";
 
 export default function Contacto() {
+  const [ref, visible] = useRevealOnScroll({ threshold: 0.2 });
+
   return (
-    <section id="contacto" style={section}>
-      <h2 style={title}>CONTACTO</h2>
+    <section
+      ref={ref}
+      id="contacto"
+      style={section}
+      className={`reveal-scope ${visible ? "is-visible" : ""}`}
+    >
+      <h2 style={title} className="reveal-item d1">
+        CONTACTO
+      </h2>
 
       <form style={form}>
-        <div style={row} className="contact-row">
+        <div style={row} className="contact-row reveal-item d2">
           <div style={field}>
             <label style={label}>Nombre</label>
             <input style={input} />
@@ -18,7 +28,7 @@ export default function Contacto() {
           </div>
         </div>
 
-        <div style={row} className="contact-row">
+        <div style={row} className="contact-row reveal-item d3">
           <div style={field}>
             <label style={label}>Email *</label>
             <input style={input} type="email" required />
@@ -30,12 +40,12 @@ export default function Contacto() {
           </div>
         </div>
 
-        <div style={{ ...field, marginTop: 40 }}>
+        <div style={{ ...field, marginTop: 40 }} className="reveal-item d4">
           <label style={label}>Mensaje *</label>
           <textarea style={textarea} rows={4} required />
         </div>
 
-        <div style={buttonRow}>
+        <div style={buttonRow} className="reveal-item d5">
           <button style={button}>Enviar</button>
         </div>
       </form>

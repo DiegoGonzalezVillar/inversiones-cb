@@ -1,19 +1,25 @@
 import React from "react";
+import useRevealOnScroll from "../hooks/useRevealOnScroll";
 
 export default function Features() {
+  const [ref, visible] = useRevealOnScroll({ threshold: 0.2 });
+
   return (
-    <section id="servicios" style={section}>
+    <section
+      ref={ref}
+      id="servicios"
+      style={section}
+      className={`reveal-scope ${visible ? "is-visible" : ""}`}
+    >
       <div style={grid} className="features-grid">
         <Feature
           title="SERVICIOS"
           text="Acompañamos a empresas en la planificación, gestión y seguimiento de sus inversiones, brindando una visión integral y profesional."
         />
-
         <Feature
           title="PROYECTOS"
           text="Gestionamos proyectos de inversión de principio a fin, asegurando control, trazabilidad y cumplimiento normativo."
         />
-
         <Feature
           title="CLIENTES"
           text="Trabajamos junto a nuestros clientes como socios estratégicos, priorizando la confianza y los resultados a largo plazo."
@@ -26,12 +32,19 @@ export default function Features() {
 function Feature({ title, text }) {
   return (
     <div style={card} className="feature-card">
-      <h3 style={titleStyle}>{title}</h3>
-      <p style={textStyle}>{text}</p>
-      <button style={button}>Más información</button>
+      <h3 style={titleStyle} className="reveal-item d1">
+        {title}
+      </h3>
+      <p style={textStyle} className="reveal-item d2">
+        {text}
+      </p>
+      <button style={button} className="reveal-item d3">
+        Más información
+      </button>
     </div>
   );
 }
+
 const section = {
   padding: "100px 32px",
   backgroundColor: "#fff",

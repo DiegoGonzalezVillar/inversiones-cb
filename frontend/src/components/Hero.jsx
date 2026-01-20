@@ -9,7 +9,7 @@ export default function Hero() {
     <section id="inicio" style={hero} className="hero">
       <div style={overlay} />
 
-      <div style={card} className="hero-card">
+      <div style={card} className="hero-card enter-up">
         <p style={{ color: "#555" }}>Desarrollando los mejores proyectos</p>
 
         <h1 style={title} className="hero-title">

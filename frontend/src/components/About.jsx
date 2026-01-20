@@ -1,29 +1,42 @@
 import React from "react";
-import fondo from "../images/fondo.jpg"; // podés usar la misma imagen si querés
+import fondo from "../images/fondo.jpg";
+import useRevealOnScroll from "../hooks/useRevealOnScroll";
 
 export default function About() {
+  const [ref, visible] = useRevealOnScroll({ threshold: 0.2 });
+
   return (
-    <section id="about" style={section}>
+    <section
+      ref={ref}
+      id="about"
+      style={section}
+      className={`reveal-scope ${visible ? "is-visible" : ""}`}
+    >
       {/* Overlay */}
       <div style={overlay} />
 
       {/* Contenido */}
       <div style={content}>
-        <h2 style={title}>SOBRE NOSOTROS</h2>
+        <h2 style={title} className="reveal-item d1">
+          SOBRE NOSOTROS
+        </h2>
 
-        <p style={text}>
+        <p style={text} className="reveal-item d2">
           Acompañamos a empresas en el desarrollo, gestión y seguimiento de
           proyectos de inversión, brindando una visión estratégica, clara y
           profesional en cada etapa del proceso.
         </p>
 
-        <p style={text}>
+        <p style={text} className="reveal-item d3">
           Nuestro enfoque combina experiencia técnica, conocimiento normativo y
           una gestión eficiente, permitiendo a nuestros clientes tomar mejores
           decisiones y maximizar el valor de sus proyectos.
         </p>
 
-        <button style={button}>Más información</button>
+        {/* Si querés, podés usar d4 en CSS; si no, reutilizamos d3 */}
+        <button style={button} className="reveal-item d3">
+          Más información
+        </button>
       </div>
     </section>
   );
@@ -35,6 +48,7 @@ const section = {
   backgroundImage: `url(${fondo})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
+  backgroundAttachment: "fixed", // <-- esto
   display: "flex",
   alignItems: "center",
   justifyContent: "center",

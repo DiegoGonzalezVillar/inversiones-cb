@@ -96,5 +96,45 @@ html {
   scroll-behavior: smooth;
 }
 
+.enter-up {
+  animation: enterUp 1000ms ease-out both;
+}
+
+@keyframes enterUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Se activa cuando el contenedor entra en pantalla */
+.reveal-scope .reveal-item {
+  opacity: 0;
+  transform: translateY(40px); /* antes 14px: ahora entra desde más abajo */
+  transition: opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-scope.is-visible .reveal-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* delays escalonados (título, texto, botón) */
+.reveal-scope.is-visible .reveal-item.d1 { transition-delay: 0ms; }
+.reveal-scope.is-visible .reveal-item.d2 { transition-delay: 300ms; }
+.reveal-scope.is-visible .reveal-item.d3 { transition-delay: 600ms; }
+.reveal-scope.is-visible .reveal-item.d4 { transition-delay: 900ms; }
+.reveal-scope.is-visible .reveal-item.d5 { transition-delay: 1200ms; }
+
+
+
+
 
 
