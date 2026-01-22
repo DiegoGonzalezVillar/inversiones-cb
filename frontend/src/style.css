@@ -133,6 +133,15 @@ html {
 .reveal-scope.is-visible .reveal-item.d4 { transition-delay: 900ms; }
 .reveal-scope.is-visible .reveal-item.d5 { transition-delay: 1200ms; }
 
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  transform: scale(1.20); /* coincide con startScale */
+  will-change: transform;
+  z-index: 0;
+}
+
+
 
 
 
