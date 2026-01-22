@@ -263,12 +263,11 @@ const page = {
   minHeight: "calc(100vh)", // ajusta si tu header/footer ocupa más/menos
   display: "flex",
   justifyContent: "center",
-  padding: "40px 16px",
+  padding: "40px 0px",
   background: "linear-gradient(120deg, #030e31, #0b2d7a)",
 };
 
 const container = {
-  width: "100%",
   maxWidth: 1200,
 };
 
