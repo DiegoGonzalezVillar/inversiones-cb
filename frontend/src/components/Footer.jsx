@@ -2,8 +2,10 @@ import React from "react";
 
 // components/Footer.jsx
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer style={footer}>© 2025 – Gestión de Inversiones Uruguay</footer>
+    <footer style={footer}>© {year} – Gestión de Inversiones Uruguay</footer>
   );
 }
 
