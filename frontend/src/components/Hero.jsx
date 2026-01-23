@@ -17,7 +17,6 @@ export default function Hero() {
 
     const update = () => {
       const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight;
 
       // 0 cuando el hero está arriba, 1 cuando ya salió
       const t = clamp(-rect.top / rect.height, 0, 1);
@@ -51,9 +50,15 @@ export default function Hero() {
       <div style={overlay} />
 
       <div style={card} className="hero-card enter-up">
-        <p style={{ color: "#555" }}>Desarrollando los mejores proyectos</p>
+        <p style={{ color: "#555", fontSize: "20px" }}>
+          Desarrollando los mejores proyectos
+        </p>
         <h1 style={title}>TRABAJANDO EN EQUIPO</h1>
-        <button style={button} onClick={() => navigate("/empresas")}>
+        <button
+          style={button}
+          className="btn-invert"
+          onClick={() => navigate("/empresas")}
+        >
           Nuestros proyectos
         </button>
       </div>
@@ -69,7 +74,7 @@ function lerp(a, b, t) {
 }
 
 const hero = {
-  height: "80vh",
+  height: "85vh",
   position: "relative",
   display: "flex",
   alignItems: "flex-end",
@@ -88,10 +93,11 @@ const overlay = {
 const card = {
   position: "relative",
   backgroundColor: "#fff",
-  padding: "60px 80px",
+  padding: "30px 110px", // ✅ menos alto (30) y más ancho (110)
   textAlign: "center",
-  maxWidth: 700,
   zIndex: 2,
+  maxWidth: 650, // ✅ más ancha
+  width: "90%", // ✅ responsivo
 };
 
 const title = {
@@ -105,6 +111,10 @@ const button = {
   marginTop: 20,
   padding: "14px 32px",
   border: "1px solid #0b3a5b",
-  backgroundColor: "#0b3a5b",
+  backgroundColor: "#fbfbfc",
   cursor: "pointer",
+  color: "#0b3a5b",
+  borderRadius: 0, // ✅ siempre rectangular
+  outline: "none", // opcional
+  appearance: "none", // opcional (mejor consistencia)
 };

@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { apiFetch } from "../api/api";
 import "../styles/tools.css";
 
 export default function Tools() {
@@ -126,10 +125,8 @@ export default function Tools() {
               <div
                 style={{
                   ...dropzone,
-                  borderColor: dragOver ? "#60a5fa" : "rgba(255,255,255,0.20)",
-                  backgroundColor: dragOver
-                    ? "rgba(96,165,250,0.08)"
-                    : "rgba(255,255,255,0.03)",
+                  borderColor: dragOver ? THEME.blue : THEME.border,
+                  backgroundColor: dragOver ? THEME.blueTint : THEME.surface2,
                 }}
                 onDragOver={(e) => {
                   e.preventDefault();
@@ -153,10 +150,10 @@ export default function Tools() {
                 />
 
                 <div style={{ textAlign: "center" }}>
-                  <p style={{ margin: 0, fontWeight: 700, fontSize: 16 }}>
+                  <p style={{ margin: 0, fontWeight: 800, fontSize: 16 }}>
                     Arrastrá tu archivo acá
                   </p>
-                  <p style={{ margin: "6px 0 0", opacity: 0.8 }}>
+                  <p style={{ margin: "6px 0 0", color: THEME.textMuted }}>
                     o hacé clic para seleccionarlo (.xls / .xlsx)
                   </p>
                 </div>
@@ -165,10 +162,10 @@ export default function Tools() {
               {/* DETALLE ARCHIVO */}
               <div style={fileInfo} className="tools-fileinfo">
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <span style={{ opacity: 0.85, fontSize: 13 }}>
+                  <span style={{ color: THEME.textMuted, fontSize: 13 }}>
                     Archivo seleccionado
                   </span>
-                  <span style={{ fontWeight: 700 }}>
+                  <span style={{ fontWeight: 800 }}>
                     {file ? file.name : "—"}
                   </span>
                 </div>
@@ -256,19 +253,46 @@ export default function Tools() {
   );
 }
 
+/* =======================
+   THEME (cambiás acá y listo)
+   ======================= */
+const THEME = {
+  blue: "#0b3a5b",
+  blueDark: "#072a41",
+  bg: "#ffffff",
+  surface: "#ffffff",
+  surface2: "rgba(11,58,91,0.02)",
+  border: "rgba(11,58,91,0.16)",
+  borderStrong: "rgba(11,58,91,0.22)",
+  text: "#0b3a5b",
+  textMuted: "rgba(11,58,91,0.70)",
+  blueTint: "rgba(11,58,91,0.06)",
+
+  okBorder: "rgba(34,197,94,0.35)",
+  okBg: "rgba(34,197,94,0.08)",
+  okText: "#14532d",
+
+  errBorder: "rgba(239,68,68,0.35)",
+  errBg: "rgba(239,68,68,0.08)",
+  errText: "#7f1d1d",
+};
+
 /* ===== Styles ===== */
 
 const page = {
   width: "100%",
-  minHeight: "calc(100vh)", // ajusta si tu header/footer ocupa más/menos
+  minHeight: "calc(100vh)",
   display: "flex",
   justifyContent: "center",
   padding: "40px 0px",
-  background: "linear-gradient(120deg, #030e31, #0b2d7a)",
+  background: THEME.bg,
+  color: THEME.text,
 };
 
 const container = {
   maxWidth: 1200,
+  width: "100%",
+  padding: "0 18px",
 };
 
 const header = {
@@ -283,14 +307,15 @@ const title = {
   margin: 0,
   fontSize: 34,
   letterSpacing: 0.3,
-  color: "rgba(255,255,255,0.95)",
+  color: THEME.text,
 };
 
 const subtitle = {
   marginTop: 8,
   marginBottom: 0,
-  opacity: 0.85,
+  opacity: 0.95,
   maxWidth: 720,
+  color: THEME.textMuted,
 };
 
 const badge = {
@@ -298,44 +323,47 @@ const badge = {
   flexDirection: "column",
   gap: 2,
   padding: "10px 14px",
-  border: "1px solid rgba(255,255,255,0.18)",
-  backgroundColor: "rgba(255,255,255,0.04)",
+  border: `1px solid ${THEME.border}`,
+  backgroundColor: THEME.surface2,
   borderRadius: 12,
   backdropFilter: "blur(8px)",
+  color: THEME.text,
 };
 
 const card = {
   borderRadius: 18,
-  border: "1px solid rgba(255,255,255,0.14)",
-  background:
-    "linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))",
-  boxShadow: "0 20px 50px rgba(0,0,0,0.35)",
+  border: `1px solid ${THEME.border}`,
+  background: THEME.surface,
+  boxShadow: "0 18px 40px rgba(0,0,0,0.08)",
   padding: 24,
 };
 
 const grid = {
   display: "grid",
+  gridTemplateColumns: "1.2fr 0.8fr",
   gap: 18,
 };
 
 const h2 = {
   margin: 0,
   fontSize: 20,
-  color: "rgba(255,255,255,0.95)",
+  color: THEME.text,
 };
 
 const h3 = {
   margin: 0,
   fontSize: 16,
-  color: "rgba(255,255,255,0.95)",
+  color: THEME.text,
 };
 
 const dropzone = {
-  border: "2px dashed rgba(255,255,255,0.20)",
+  border: `2px dashed ${THEME.borderStrong}`,
   borderRadius: 18,
   padding: "26px 18px",
   cursor: "pointer",
   transition: "all 0.15s ease",
+  backgroundColor: THEME.surface2,
+  color: THEME.text,
 };
 
 const fileInfo = {
@@ -344,26 +372,27 @@ const fileInfo = {
   alignItems: "center",
   padding: "12px 14px",
   borderRadius: 14,
-  border: "1px solid rgba(255,255,255,0.14)",
-  backgroundColor: "rgba(255,255,255,0.03)",
+  border: `1px solid ${THEME.border}`,
+  backgroundColor: THEME.surface2,
+  color: THEME.text,
 };
 
 const primaryBtn = {
   padding: "12px 16px",
   borderRadius: 12,
-  border: "1px solid rgba(96,165,250,0.5)",
-  background: "rgba(96,165,250,0.18)",
-  color: "rgba(255,255,255,0.95)",
-  fontWeight: 700,
+  border: `1px solid ${THEME.blue}`,
+  background: THEME.blue,
+  color: "#ffffff",
+  fontWeight: 800,
 };
 
 const downloadBtn = {
   padding: "12px 16px",
   borderRadius: 12,
-  border: "1px solid rgba(34,197,94,0.50)",
-  background: "rgba(34,197,94,0.14)",
-  color: "rgba(255,255,255,0.95)",
-  fontWeight: 700,
+  border: `1px solid ${THEME.border}`,
+  background: "rgba(11,58,91,0.08)",
+  color: THEME.text,
+  fontWeight: 800,
   textDecoration: "none",
   display: "inline-flex",
   alignItems: "center",
@@ -373,42 +402,46 @@ const downloadBtn = {
 const ghostBtn = {
   padding: "10px 14px",
   borderRadius: 12,
-  border: "1px solid rgba(255,255,255,0.18)",
-  backgroundColor: "rgba(255,255,255,0.03)",
-  color: "rgba(255,255,255,0.90)",
+  border: `1px solid ${THEME.border}`,
+  backgroundColor: THEME.surface2,
+  color: THEME.text,
   cursor: "pointer",
+  fontWeight: 700,
 };
 
 const alertError = {
   marginTop: 14,
   padding: "12px 14px",
   borderRadius: 12,
-  border: "1px solid rgba(239,68,68,0.45)",
-  backgroundColor: "rgba(239,68,68,0.10)",
+  border: `1px solid ${THEME.errBorder}`,
+  backgroundColor: THEME.errBg,
+  color: THEME.errText,
 };
 
 const alertOk = {
   marginTop: 14,
   padding: "12px 14px",
   borderRadius: 12,
-  border: "1px solid rgba(34,197,94,0.45)",
-  backgroundColor: "rgba(34,197,94,0.10)",
+  border: `1px solid ${THEME.okBorder}`,
+  backgroundColor: THEME.okBg,
+  color: THEME.okText,
 };
 
 const rightCard = {
   borderRadius: 18,
-  border: "1px solid rgba(255,255,255,0.14)",
-  backgroundColor: "rgba(255,255,255,0.03)",
+  border: `1px solid ${THEME.border}`,
+  backgroundColor: THEME.surface2,
   padding: 18,
   display: "flex",
   flexDirection: "column",
   gap: 14,
+  color: THEME.text,
 };
 
 const list = {
   margin: 0,
   paddingLeft: 18,
-  opacity: 0.9,
+  color: THEME.textMuted,
 };
 
 const li = {
@@ -417,18 +450,19 @@ const li = {
 
 const divider = {
   height: 1,
-  backgroundColor: "rgba(255,255,255,0.12)",
+  backgroundColor: "rgba(11,58,91,0.12)",
   margin: "4px 0",
 };
 
 const hint = {
   padding: "12px 14px",
   borderRadius: 14,
-  border: "1px solid rgba(255,255,255,0.14)",
-  backgroundColor: "rgba(255,255,255,0.03)",
-  opacity: 0.92,
+  border: `1px solid ${THEME.border}`,
+  backgroundColor: THEME.surface2,
+  color: THEME.textMuted,
 };
 
 const muted = {
   opacity: 0.8,
+  color: THEME.textMuted,
 };

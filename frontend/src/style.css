@@ -141,6 +141,18 @@ html {
   z-index: 0;
 }
 
+.btn-invert {
+  border-radius: 0 !important;
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
+}
+
+.btn-invert:hover {
+  background-color: #0b3a5b !important;
+  color: #ffffff !important;
+  border-color: #0b3a5b !important;
+}
+
+
 
 
 
