@@ -38,7 +38,6 @@ export default function Login() {
           <input
             style={input}
             type="email"
-            placeholder="admin@cb.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -47,7 +46,6 @@ export default function Login() {
           <input
             style={input}
             type="password"
-            placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
