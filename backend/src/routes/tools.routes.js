@@ -9,6 +9,8 @@ import { requireAdmin } from "../middlewares/role.middleware.js";
 
 const router = Router();
 
+const PYTHON_CMD = process.platform === "win32" ? "py" : "python3";
+
 const tmpDir = path.resolve("tmp");
 if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir);
 
@@ -45,7 +47,7 @@ router.post(
     const scriptPath = path.resolve("scripts", "convert.py");
 
     execFile(
-      "python3",
+      PYTHON_CMD,
       [scriptPath, inputPath, outputPath],
       { timeout: 60_000 },
       (err, stdout, stderr) => {
@@ -69,9 +71,54 @@ router.post(
 
           if (downloadErr) console.error("Download error:", downloadErr);
         });
-      }
+      },
     );
-  }
+  },
+);
+
+router.post(
+  "/cfe-emitidos-to-txt",
+  authRequired,
+  requireAdmin,
+  upload.single("file"),
+  (req, res) => {
+    if (!req.file) return res.status(400).json({ error: "Archivo requerido" });
+
+    const inputPath = req.file.path;
+    const outputPath = path.join(tmpDir, `cfe_emitidos_${Date.now()}.txt`);
+    const scriptPath = path.resolve("scripts", "cfe_emitidos_to_txt.py");
+
+    execFile(
+      PYTHON_CMD,
+      [scriptPath, inputPath, outputPath],
+      { timeout: 60_000 },
+      (err, stdout, stderr) => {
+        if (err) {
+          console.error("PY ERROR:", err);
+          console.error("STDOUT:", stdout);
+          console.error("STDERR:", stderr);
+
+          try {
+            fs.unlinkSync(inputPath);
+          } catch {}
+          return res
+            .status(500)
+            .json({ error: stderr || "Error procesando archivo" });
+        }
+
+        res.download(outputPath, "cfe_emitidos.txt", (downloadErr) => {
+          try {
+            fs.unlinkSync(inputPath);
+          } catch {}
+          try {
+            fs.unlinkSync(outputPath);
+          } catch {}
+
+          if (downloadErr) console.error("Download error:", downloadErr);
+        });
+      },
+    );
+  },
 );
 
 export default router;
