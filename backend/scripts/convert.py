@@ -76,7 +76,7 @@ def generar_txt(df_sub, out_path):
             cuenta_gravado = str(int(row["cuenta"]))
             cuenta_exento = "4101"
             cuenta_haber_iva = "21332"
-            cuenta_debe = "11111"
+            cuenta_debe = "1121001"
 
             if abs(exento) > 1e-9:
                 w.writerow([dia, "", cuenta_exento, "", ruc, concepto, moneda, fmt2(exento), "", "", "V"])
